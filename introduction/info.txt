@@ -1,0 +1,20 @@
+What is a Protocol?
+
+A set of rules that defines how two devices communicate — what to send, when to send, and how to interpret the data.
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Why protocols exist
+
+Device A wants to talk to Device B
+
+Without rules:
+A sends: 10110011
+B reads: ????????  — has no idea what it means
+
+With rules (protocol):
+Both agree → bit order, speed, start/stop signals
+A sends: 10110011
+B reads: 0xB3 = temperature 179  ✔
+
+
