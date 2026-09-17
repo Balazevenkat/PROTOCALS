@@ -1,0 +1,80 @@
+UART — What is it?
+
+UART = Universal Asynchronous Receiver/Transmitter
+
+It is a hardware peripheral inside the MCU used for serial communication between two devices.
+
+Example:
+
+MCU  ───────── UART ─────────  Sensor
+TX   ───────────────────────→ RX
+RX   ←─────────────────────── TX
+GND  ───────────────────────── GND
+Why "asynchronous"?
+
+UART does not have a separate clock line between the two devices.
+
+Instead, both devices agree beforehand on:
+
+Baud rate → e.g. 9600
+Data bits → e.g. 8
+Parity → e.g. None
+Stop bits → e.g. 1
+
+So 9600 8N1 is a common UART configuration.
+
+UART frame
+
+For 8N1:
+
+Idle   Start       Data             Stop
+HIGH    LOW     8 bits             HIGH
+ │       │    ┌──────────┐           │
+ ────────┘    │ 01010101 │───────────
+
+The receiver detects the START bit, then samples the data bits according to the agreed baud rate.
+
+Example
+
+Suppose MCU wants to send:
+
+0x41
+
+0x41 in binary:
+
+01000001
+
+UART sends the data bits according to its configured bit order (commonly LSB first):
+
+Start → 1 0 0 0 0 0 1 0 → Stop
+  0                         1
+Important UART pins
+Pin	Meaning
+TX	Transmit data
+RX	Receive data
+GND	Common reference
+
+Remember:
+
+MCU TX → Device RX
+MCU RX ← Device TX
+
+Practical MCU example
+
+Suppose your MCU wants to send:
+
+"HELLO"
+
+to a PC.
+
+The MCU's UART peripheral converts each character into UART frames:
+
+H → UART frame
+E → UART frame
+L → UART frame
+L → UART frame
+O → UART frame
+
+The PC's UART receiver detects the frames and reconstructs:
+
+HELLO
